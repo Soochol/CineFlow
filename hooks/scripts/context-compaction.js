@@ -7,36 +7,7 @@
  * 컨텍스트 압축 전에 PDCA 상태를 스냅샷으로 보존한다.
  */
 
-const fs = require('fs');
-const path = require('path');
-
-/**
- * Load PDCA status
- */
-function loadPdcaStatus() {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  if (!fs.existsSync(statusPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
-
-/**
- * Load config
- */
-function loadConfig() {
-  const configPath = path.join(process.cwd(), 'affim-ai.config.json');
-  if (!fs.existsSync(configPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
+const { loadConfig, loadPdcaStatus } = require('./lib/config-loader');
 
 /**
  * Generate PDCA context summary for preservation

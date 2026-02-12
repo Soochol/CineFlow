@@ -4,6 +4,7 @@
  * @module scripts/merge-sections
  *
  * 섹션 파일들에서 스토리 텍스트만 추출하여 story.md로 병합한다.
+ * Config-driven: contentTypes[type].mergeStrategy, sectionFilePattern 사용.
  *
  * Usage: node scripts/merge-sections.js <content-name>
  * Example: node scripts/merge-sections.js last-letter
@@ -11,30 +12,20 @@
 
 const fs = require('fs');
 const path = require('path');
+const { loadConfig, loadPdcaStatus, getSectionFileRegex, getMergeStrategy } = require('../hooks/scripts/lib/config-loader');
 
 /**
- * Collect section files sorted numerically.
- * Handles both patterns:
- *   film: NN-section-N.md (e.g., 04-section-1.md)
- *   blog: section-N.md
+ * Collect section files sorted numerically (config-driven pattern).
  */
-function collectSectionFiles(outputDir) {
+function collectSectionFiles(outputDir, sectionRegex) {
   const files = fs.readdirSync(outputDir);
-
-  // Film pattern: NN-section-N.md
-  const filmPattern = /^(\d+)-section-(\d+)\.md$/;
-  const filmFiles = files.filter(f => filmPattern.test(f));
-  if (filmFiles.length > 0) {
-    return filmFiles.sort((a, b) => {
-      return parseInt(a.match(filmPattern)[1]) - parseInt(b.match(filmPattern)[1]);
-    });
-  }
-
-  // Blog pattern: section-N.md
-  const blogPattern = /^section-(\d+)\.md$/;
-  const blogFiles = files.filter(f => blogPattern.test(f));
-  return blogFiles.sort((a, b) => {
-    return parseInt(a.match(blogPattern)[1]) - parseInt(b.match(blogPattern)[1]);
+  const matched = files.filter(f => sectionRegex.test(f));
+  return matched.sort((a, b) => {
+    const aMatch = a.match(sectionRegex);
+    const bMatch = b.match(sectionRegex);
+    const aNum = parseInt(aMatch[1], 10);
+    const bNum = parseInt(bMatch[1], 10);
+    return aNum - bNum;
   });
 }
 
@@ -48,31 +39,48 @@ function extractTitle(content) {
 }
 
 /**
- * Extract scene heading and story text from a section file.
- * Returns { sceneHeading, story }
+ * Extract content from a section file using mergeStrategy.
+ *
+ * Strategy modes:
+ * - { extractFullContent: true } → return full file content (blog etc.)
+ * - { sectionHeadingPattern, storyMarker, stopMarker } → extract between markers (film etc.)
  */
-function extractStory(content) {
+function extractContent(content, mergeStrategy) {
+  // Full content extraction mode (blog, life-story, etc.)
+  if (mergeStrategy.extractFullContent) {
+    return { sceneHeading: null, story: content.trim() };
+  }
+
+  // Marker-based extraction mode (film etc.)
   const lines = content.split('\n');
   let sceneHeading = null;
   let storyLines = [];
   let capturing = false;
 
+  const headingPattern = mergeStrategy.sectionHeadingPattern
+    ? new RegExp(mergeStrategy.sectionHeadingPattern)
+    : null;
+  const storyMarker = mergeStrategy.storyMarker || '### 스토리';
+  const stopPattern = mergeStrategy.stopMarker
+    ? new RegExp(mergeStrategy.stopMarker)
+    : /^### /;
+
   for (const line of lines) {
-    // Scene heading: ## Scene #N — [title]
-    if (/^## Scene #\d+/.test(line) && !line.includes('Audio')) {
+    // Scene heading detection
+    if (headingPattern && headingPattern.test(line) && !line.includes('Audio')) {
       if (!sceneHeading) {
         sceneHeading = line;
       }
     }
 
-    // Start capture at ### 스토리
-    if (/^### 스토리/.test(line)) {
+    // Start capture at story marker
+    if (line.trim().startsWith(storyMarker)) {
       capturing = true;
       continue;
     }
 
-    // Stop capture at next ### heading
-    if (capturing && /^### /.test(line)) {
+    // Stop capture at next heading matching stopMarker
+    if (capturing && stopPattern.test(line)) {
       capturing = false;
       continue;
     }
@@ -104,7 +112,15 @@ async function main() {
     process.exit(1);
   }
 
-  const sectionFiles = collectSectionFiles(outputDir);
+  // Load config and determine content type
+  const config = loadConfig();
+  const pdcaStatus = loadPdcaStatus();
+  const contentType = pdcaStatus?.contentType;
+
+  const sectionRegex = getSectionFileRegex(config, contentType);
+  const mergeStrategy = getMergeStrategy(config, contentType);
+
+  const sectionFiles = collectSectionFiles(outputDir, sectionRegex);
 
   if (sectionFiles.length === 0) {
     console.error('Error: No section files found to merge.');
@@ -115,14 +131,14 @@ async function main() {
   const firstContent = fs.readFileSync(path.join(outputDir, sectionFiles[0]), 'utf8');
   const title = extractTitle(firstContent) || contentName;
 
-  // Extract stories from all sections
+  // Extract content from all sections using mergeStrategy
   const scenes = [];
   for (const file of sectionFiles) {
     const content = fs.readFileSync(path.join(outputDir, file), 'utf8');
-    const { sceneHeading, story } = extractStory(content);
+    const { sceneHeading, story } = extractContent(content, mergeStrategy);
 
     if (!story) {
-      console.warn(`Warning: No story found in ${file}, skipping.`);
+      console.warn(`Warning: No content found in ${file}, skipping.`);
       continue;
     }
 
@@ -130,7 +146,7 @@ async function main() {
   }
 
   if (scenes.length === 0) {
-    console.error('Error: No stories extracted from section files.');
+    console.error('Error: No content extracted from section files.');
     process.exit(1);
   }
 
@@ -138,20 +154,26 @@ async function main() {
   let merged = `# ${title}\n`;
 
   for (const scene of scenes) {
-    merged += `\n${scene.sceneHeading}\n\n${scene.story}\n`;
+    if (scene.sceneHeading) {
+      merged += `\n${scene.sceneHeading}\n\n${scene.story}\n`;
+    } else {
+      merged += `\n${scene.story}\n`;
+    }
   }
 
-  // Write output
-  const outputPath = path.join(outputDir, 'story.md');
+  // Determine output filename from config
+  const mergeOutputFilename = config?.pdca?.mergeOutputFilename || 'story.md';
+  const outputPath = path.join(outputDir, mergeOutputFilename);
   fs.writeFileSync(outputPath, merged, 'utf8');
 
   // Output result JSON
   const result = {
     success: true,
-    output: `PRODUCTION/${contentName}/story.md`,
+    output: `PRODUCTION/${contentName}/${mergeOutputFilename}`,
     title,
     sceneCount: scenes.length,
-    files: sectionFiles
+    files: sectionFiles,
+    mergeStrategy: mergeStrategy.extractFullContent ? 'extractFullContent' : 'marker-based'
   };
 
   console.log(JSON.stringify(result, null, 2));

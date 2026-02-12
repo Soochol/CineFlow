@@ -7,38 +7,7 @@
  * PDCA 상태를 로드하여 세션 컨텍스트를 제공한다.
  */
 
-const fs = require('fs');
-const path = require('path');
-
-/**
- * Load PDCA status from docs/.pdca-status.json
- * @returns {Object|null}
- */
-function loadPdcaStatus() {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  if (!fs.existsSync(statusPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
-
-/**
- * Load plugin config from affim-ai.config.json
- * @returns {Object|null}
- */
-function loadConfig() {
-  const configPath = path.join(process.cwd(), 'affim-ai.config.json');
-  if (!fs.existsSync(configPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
+const { loadConfig, loadPdcaStatus } = require('./lib/config-loader');
 
 /**
  * Format PDCA status for session context

@@ -1,5 +1,5 @@
 ---
-name: character
+name: film-character
 description: |
   캐릭터 프로파일 생성 스킬. 트리트먼트의 인물 요약을
   상세 프로파일로 확장한다 (외형/Kling 프롬프트/성격/아크/관계).
@@ -7,7 +7,7 @@ description: |
 
 user-invocable: false
 imports:
-  - ${PLUGIN_ROOT}/templates/character.template.md
+  - ${PLUGIN_ROOT}/templates/film/character.template.md
   - ${PLUGIN_ROOT}/skills/kling3-prompt/SKILL.md
 ---
 

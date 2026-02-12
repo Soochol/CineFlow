@@ -7,8 +7,7 @@
  * content-orchestrator 에이전트 태스크 완료 시 PDCA Do 페이즈를 완료하고 다음 단계를 안내한다.
  */
 
-const fs = require('fs');
-const path = require('path');
+const { loadPdcaStatus, savePdcaStatus } = require('./lib/config-loader');
 
 /**
  * Agent name → PDCA phase mapping
@@ -17,33 +16,6 @@ const AGENT_PHASE_MAP = {
   'content-orchestrator': 'do',
   'section-writer': 'do'
 };
-
-/**
- * Load PDCA status
- */
-function loadPdcaStatus() {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  if (!fs.existsSync(statusPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
-
-/**
- * Save PDCA status
- */
-function savePdcaStatus(status) {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  try {
-    status.updatedAt = new Date().toISOString();
-    fs.writeFileSync(statusPath, JSON.stringify(status, null, 2), 'utf8');
-  } catch (e) {
-    // Silent fail
-  }
-}
 
 /**
  * Detect agent name from Task tool input

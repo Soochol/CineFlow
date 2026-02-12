@@ -1,0 +1,31 @@
+{
+  "name": "affim-ai",
+  "version": "0.1.0",
+  "description": "AI content creation plugin - blog, screenplay, scenario with PDCA workflow",
+  "author": "bless",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "claude-code-plugin",
+    "content-creation",
+    "pdca",
+    "blog",
+    "screenplay"
+  ],
+  "files": [
+    ".claude-plugin/",
+    "agents/",
+    "hooks/",
+    "skills/",
+    "scripts/",
+    "templates/",
+    "affim-ai.config.json",
+    "CLAUDE.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

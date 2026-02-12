@@ -9,15 +9,24 @@
 
 const fs = require('fs');
 const path = require('path');
+const { loadConfig, loadPdcaStatus: loadStatus, getSectionFileRegex } = require('./lib/config-loader');
 
 /**
- * Detect content name and section from file path
- * e.g., "PRODUCTION/blog-ai-trends/section-2.md" → { content: "blog-ai-trends", section: 2 }
+ * Detect content name and section from file path (config-driven)
  */
-function parseOutputPath(filePath) {
-  const match = filePath.match(/^PRODUCTION\/([^/]+)\/(\d{2})-section-(\d+)\.md$/);
+function parseOutputPath(filePath, config, contentType) {
+  const sectionRegex = getSectionFileRegex(config, contentType);
+  const fullPattern = new RegExp(`^PRODUCTION/([^/]+)/(${sectionRegex.source})$`);
+  const match = filePath.match(fullPattern);
   if (!match) return null;
-  return { content: match[1], prefix: match[2], section: parseInt(match[3], 10) };
+
+  const filename = match[2];
+  const sectionMatch = filename.match(sectionRegex);
+  return {
+    content: match[1],
+    filename: filename,
+    section: sectionMatch ? parseInt(sectionMatch[2] || sectionMatch[1], 10) : null
+  };
 }
 
 /**
@@ -39,19 +48,7 @@ function toRelative(filePath) {
   return path.relative(cwd, abs).replace(/\\/g, '/');
 }
 
-/**
- * Load PDCA status
- */
-function loadPdcaStatus() {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  if (!fs.existsSync(statusPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
+// loadPdcaStatus imported from lib/config-loader
 
 async function main() {
   // Read hook input from stdin
@@ -88,8 +85,11 @@ async function main() {
     timestamp: new Date().toISOString()
   };
 
-  // Track section writes
-  const sectionInfo = parseOutputPath(relative);
+  // Track section writes (config-driven)
+  const config = loadConfig();
+  const pdcaStatus = loadStatus();
+  const contentType = pdcaStatus?.contentType;
+  const sectionInfo = parseOutputPath(relative, config, contentType);
   if (sectionInfo) {
     output.contentWrite = {
       content: sectionInfo.content,
@@ -97,11 +97,12 @@ async function main() {
       type: 'section'
     };
 
-    // Count total sections written so far
+    // Count total sections written so far (config-driven regex)
+    const sectionRegex = getSectionFileRegex(config, contentType);
     const outputDir = path.join(process.cwd(), 'PRODUCTION', sectionInfo.content);
     if (fs.existsSync(outputDir)) {
       try {
-        const files = fs.readdirSync(outputDir).filter(f => /^\d{2}-section-\d+\.md$/.test(f));
+        const files = fs.readdirSync(outputDir).filter(f => sectionRegex.test(f));
         output.contentWrite.totalSections = files.length;
         output.contentWrite.sections = files.sort();
       } catch (e) {

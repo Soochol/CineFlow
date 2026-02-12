@@ -201,6 +201,7 @@ cross-eyed, asymmetric face, unnatural skin, plastic skin, dead eyes, frozen exp
 
 생성 전 다음을 확인:
 
+- [ ] 6 Essential Elements가 모두 포함되었는가 (Camera, Subject, Environment, Lighting, Texture, Emotion)
 - [ ] 카메라 앵글 + 모션이 명시되었는가
 - [ ] 피사체의 액션이 구체적인가 (모호한 동사 지양)
 - [ ] 환경/조명이 구체적인가 (real light sources)
@@ -210,6 +211,19 @@ cross-eyed, asymmetric face, unnatural skin, plastic skin, dead eyes, frozen exp
 - [ ] 멀티샷이면 각 샷이 라벨링되었는가
 - [ ] 네거티브 프롬프트가 포함되었는가
 - [ ] 길이와 화면 비율이 적절한가
+
+## Post-Generation Checklist
+
+생성 후 다음을 검증:
+
+- [ ] 6 Essential Elements가 빠짐없이 반영되었는가
+- [ ] 프롬프트 길이가 1-3문장 범위인가 (과다/과소 확인)
+- [ ] 모순된 지시가 없는가 (차분한 장면 + 격렬한 액션 동시 기술)
+- [ ] 네거티브 프롬프트가 장면 특성에 맞게 조합되었는가 (범용 + 추가)
+- [ ] I2V 프롬프트인 경우 "보이는 것을 묘사하지 않는" 원칙을 준수하는가
+- [ ] 멀티샷 간 캐릭터 라벨이 일관되는가
+- [ ] 각 샷의 Duration이 2-3초 범위인가 (총 길이 대비 적절)
+- [ ] Design 문서의 Global Style/Negative Prompt가 프롬프트에 반영되었는가
 
 ## SFX — 환경음
 

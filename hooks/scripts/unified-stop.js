@@ -7,41 +7,7 @@
  * 세션 종료 시 PDCA 상태를 정리하고 저장한다.
  */
 
-const fs = require('fs');
-const path = require('path');
-
-/**
- * Load PDCA status
- * @returns {Object|null}
- */
-function loadPdcaStatus() {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  if (!fs.existsSync(statusPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
-
-/**
- * Save PDCA status with updated timestamp
- * @param {Object} status
- */
-function savePdcaStatus(status) {
-  const docsDir = path.join(process.cwd(), 'docs');
-  const statusPath = path.join(docsDir, '.pdca-status.json');
-
-  if (!fs.existsSync(docsDir)) return;
-
-  try {
-    status.updatedAt = new Date().toISOString();
-    fs.writeFileSync(statusPath, JSON.stringify(status, null, 2), 'utf8');
-  } catch (e) {
-    // Silent fail on write error
-  }
-}
+const { loadPdcaStatus, savePdcaStatus } = require('./lib/config-loader');
 
 async function main() {
   const pdcaStatus = loadPdcaStatus();

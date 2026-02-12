@@ -48,6 +48,10 @@
 | **대사/내레이션** | {dialogue} |
 | **Duration** | {duration_sec}s |
 
+#### 나레이션 스크립트
+
+{narration_script}
+
 #### I2V (Image to Video) 프롬프트
 
 **키 프레임:**

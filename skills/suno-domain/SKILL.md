@@ -520,6 +520,27 @@ user-invocable: false
 
 ---
 
+## Pre-Selection Checklist
+
+태그 선택 전 다음을 확인:
+
+- [ ] 장르 태그가 1-2개로 제한되었는가 (과도한 장르 혼합 지양)
+- [ ] 악기 태그가 2-3개로 제한되었는가
+- [ ] 무드 태그가 1-2개로 제한되었는가
+- [ ] Structure 태그로 곡 구조가 명확히 정의되었는가
+- [ ] 보컬 태그(Gender + Style + Emotion)가 조합되었는가
+- [ ] 태그 위치를 고려했는가 (첫 20-30 words + 섹션 전환점)
+
+## Post-Selection Checklist
+
+태그 조합 후 다음을 검증:
+
+- [ ] 태그 총 개수가 적절한가 (섹션당 퍼포먼스 큐 1-3개)
+- [ ] 장르 + 악기 + 무드 간 모순이 없는가 (재즈 + 디스토션 기타 등)
+- [ ] Style Prompt에는 음악적 태그만, Lyrics에는 구조 태그만 들어가 있는가
+- [ ] 영상 씬의 감정과 Mood/Energy 태그가 매칭되는가
+- [ ] Production/Texture 태그가 전체 영상 톤과 일관되는가
+
 ## Notes
 
 - **Structure tags가 style prompt보다 10배 강력** — 곡 구조 제어의 핵심

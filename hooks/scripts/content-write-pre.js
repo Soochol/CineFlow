@@ -9,19 +9,24 @@
 
 const fs = require('fs');
 const path = require('path');
+const { loadConfig, loadPdcaStatus: loadStatus, getSectionFileRegex } = require('./lib/config-loader');
 
 /**
- * Valid write target patterns for content pipeline
+ * Build valid write target patterns (config-driven section pattern)
  */
-const VALID_WRITE_TARGETS = [
-  /^PRODUCTION\/[^/]+\/\d{2}-section-\d+\.md$/,     // PRODUCTION/{content}/{NN}-section-{N}.md
-  /^docs\/01-plan\/features\/[^/]+\.plan\.md$/, // plan documents
-  /^docs\/02-design\/features\/[^/]+\.design\.md$/, // design documents
-  /^docs\/03-analysis\/[^/]+\.analysis\.md$/,   // analysis reports
-  /^docs\/04-report\/features\/[^/]+\.report\.md$/, // reports
-  /^docs\/\.pdca-status\.json$/,                // status file
-  /^docs\/archive\//,                           // archive
-];
+function buildValidWriteTargets(config, contentType) {
+  const sectionRegex = getSectionFileRegex(config, contentType);
+  return [
+    new RegExp(`^PRODUCTION/[^/]+/${sectionRegex.source}$`), // section files
+    /^PRODUCTION\/[^/]+\/\d{2}-[^/]+\.md$/,        // pipeline files (logline, treatment, etc.)
+    /^docs\/01-plan\/features\/[^/]+\.plan\.md$/,   // plan documents
+    /^docs\/02-design\/features\/[^/]+\.design\.md$/, // design documents
+    /^docs\/03-analysis\/[^/]+\.analysis\.md$/,     // analysis reports
+    /^docs\/04-report\/features\/[^/]+\.report\.md$/, // reports
+    /^docs\/\.pdca-status\.json$/,                  // status file
+    /^docs\/archive\//,                             // archive
+  ];
+}
 
 /**
  * Phase prerequisites — which phases must be done before writing to target
@@ -31,19 +36,7 @@ const PHASE_PREREQUISITES = {
   'docs/03-analysis/': ['do'], // Check phase needs Do done
 };
 
-/**
- * Load PDCA status
- */
-function loadPdcaStatus() {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  if (!fs.existsSync(statusPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
+// loadPdcaStatus imported from lib/config-loader
 
 /**
  * Normalize file path to relative from cwd
@@ -89,6 +82,12 @@ async function main() {
     timestamp: new Date().toISOString()
   };
 
+  // Build valid targets from config
+  const config = loadConfig();
+  const pdcaStatusForTargets = loadStatus();
+  const contentType = pdcaStatusForTargets?.contentType;
+  const VALID_WRITE_TARGETS = buildValidWriteTargets(config, contentType);
+
   // Check if target is a valid content pipeline path
   const isValidTarget = VALID_WRITE_TARGETS.some(pattern => pattern.test(relative));
   if (!isValidTarget) {
@@ -99,7 +98,7 @@ async function main() {
   }
 
   // Check phase prerequisites
-  const pdcaStatus = loadPdcaStatus();
+  const pdcaStatus = loadStatus();
   if (pdcaStatus?.phases) {
     for (const [prefix, requiredPhases] of Object.entries(PHASE_PREREQUISITES)) {
       if (relative.startsWith(prefix)) {

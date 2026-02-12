@@ -150,6 +150,22 @@ user-invocable: false
 > "Camera moves right" (X) → "Camera tracks alongside the subject as she walks" (O)
 > Kling 3.0은 피사체-카메라 관계를 서술할 때 가장 정확하게 이해한다.
 
+## Pre-Generation Checklist
+
+- [ ] 샷 타입(EWS~ECU)이 장면의 목적에 맞게 선택되었는가
+- [ ] 카메라 앵글이 장면의 감정(위압/취약/중립)과 일치하는가
+- [ ] 카메라 모션이 피사체와의 관계로 서술되었는가 ("Camera moves right" X → "Camera tracks alongside" O)
+- [ ] 렌즈 스펙이 명시되었는가 (초점거리 또는 DOF)
+- [ ] 한 프롬프트에 카메라 모션이 1-2개 이하인가
+
+## Post-Generation Checklist
+
+- [ ] 카메라 앵글/모션/렌즈 조합이 장면의 감정 의도와 일치하는가
+- [ ] 씬 내 샷 전환 패턴이 자연스러운가 (감정 고조: WS→CU, 리빌: ECU→EWS 등)
+- [ ] 동일 씬 내 샷 간 카메라 스타일이 일관되는가 (핸드헬드 ↔ 스테디캠 혼용 확인)
+- [ ] 시간 진행이 명시되었는가 ("Camera slowly pushes in over 5 seconds")
+- [ ] 과도한 카메라 조합 없이 1-2개 모션으로 제한되었는가
+
 ## Notes
 
 - 한 프롬프트에 1-2개의 카메라 모션이 적절 (과도한 조합 지양)

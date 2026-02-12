@@ -1,5 +1,5 @@
 ---
-name: logline
+name: film-logline
 description: |
   로그라인 생성 스킬. 영화 스타일을 사용자에게 질문하고,
   핵심 소재 브레인스토밍 후 로그라인을 자동 생성한다.
@@ -15,7 +15,7 @@ allowed-tools:
   - Grep
   - AskUserQuestion
 imports:
-  - ${PLUGIN_ROOT}/templates/logline.template.md
+  - ${PLUGIN_ROOT}/templates/film/logline.template.md
 next-skill: null
 ---
 

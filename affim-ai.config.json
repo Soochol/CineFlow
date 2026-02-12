@@ -1,6 +1,6 @@
 {
   "$schema": "./affim-ai.config.schema.json",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "pdca": {
     "designDocPaths": [
       "docs/02-design/features/{content}.design.md"
@@ -35,25 +35,95 @@
   },
   "templates": {
     "directory": "templates",
-    "types": {
-      "plan": "plan.template.md",
-      "design": "design.template.md",
-      "analysis": "analysis.template.md",
-      "blog-design": "blog-design.template.md",
-      "character": "character.template.md"
+    "shared": {
+      "plan": "shared/plan.template.md",
+      "design": "shared/design.template.md",
+      "analysis": "shared/analysis.template.md"
     }
   },
   "contentTypes": {
     "film": {
-      "skills": ["kling3-prompt", "kling3-camera", "kling3-style", "kling3-examples", "suno-prompt", "suno-domain"],
-      "templates": ["film-design.template.md", "screenplay.template.md", "sound-design.template.md", "logline.template.md", "treatment.template.md", "character.template.md"],
-      "pipeline": ["logline", "treatment", "screenplay"],
-      "sectionOffset": 3
+      "skills": ["kling3-prompt", "kling3-camera", "kling3-style", "kling3-examples", "suno-prompt", "suno-domain", "narration-script"],
+      "templates": {
+        "design": "templates/film/design.template.md",
+        "output": ["templates/film/screenplay.template.md", "templates/film/sound-design.template.md"],
+        "logline": "templates/film/logline.template.md",
+        "treatment": "templates/film/treatment.template.md",
+        "character": "templates/film/character.template.md"
+      },
+      "pipeline": ["film-logline", "film-treatment", "film-screenplay"],
+      "sectionOffset": 3,
+      "sectionFilePattern": "^(\\d{2})-section-(\\d+)\\.md$",
+      "designPhaseSteps": [
+        { "check": "PRODUCTION/{content}/01-logline.md", "create": "film-logline" },
+        { "check": "PRODUCTION/{content}/02-treatment.md", "agent": "story-designer" },
+        { "use": "design", "template": "film" }
+      ],
+      "mergeStrategy": {
+        "sectionHeadingPattern": "^## Scene #\\d+",
+        "storyMarker": "### 스토리",
+        "stopMarker": "^### "
+      },
+      "validationProfile": {
+        "rules": [
+          "6-essential-elements",
+          "character-consistency",
+          "shot-duration",
+          "total-time",
+          "audio-sync",
+          "negative-prompt",
+          "template-structure",
+          "narration-script-quality"
+        ]
+      }
     },
     "blog": {
       "skills": ["blog-writing", "blog-seo"],
-      "templates": ["plan.template.md", "design.template.md", "blog-design.template.md"],
-      "sectionOffset": 0
+      "templates": {
+        "design": "templates/blog/design.template.md"
+      },
+      "sectionOffset": 0,
+      "sectionFilePattern": "^(\\d{2})-section-(\\d+)\\.md$",
+      "designPhaseSteps": [
+        { "use": "design", "template": "blog", "askUser": ["blogType", "primaryKeyword", "targetPlatform"] }
+      ],
+      "mergeStrategy": {
+        "extractFullContent": true
+      },
+      "validationProfile": {
+        "rules": [
+          "eeat-signals",
+          "readability",
+          "honorific-consistency",
+          "seo-keyword-placement"
+        ]
+      }
+    },
+    "narration-video": {
+      "skills": ["kling3-prompt", "kling3-camera", "kling3-style", "narration-script"],
+      "templates": {
+        "design": "templates/narration-video/design.template.md",
+        "output": ["templates/narration-video/scene.template.md"]
+      },
+      "sectionOffset": 0,
+      "sectionFilePattern": "^(\\d{2})-section-(\\d+)\\.md$",
+      "designPhaseSteps": [
+        { "use": "design", "template": "narration-video", "askUser": ["주제", "타겟감정", "이미지스타일선호"] }
+      ],
+      "mergeStrategy": {
+        "sectionHeadingPattern": "^## Scene #\\d+",
+        "storyMarker": "### 나레이션 스크립트",
+        "stopMarker": "^### "
+      },
+      "validationProfile": {
+        "rules": [
+          "6-essential-elements",
+          "negative-prompt",
+          "template-structure",
+          "narration-script-quality",
+          "image-style-consistency"
+        ]
+      }
     }
   },
   "hooks": {

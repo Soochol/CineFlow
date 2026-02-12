@@ -450,6 +450,19 @@ then fading to a single violin for the outro
 - [ ] 중요 요소가 처음과 끝에 배치되었는가 (Sandwich)
 - [ ] Lyrics가 8-12줄 이하인가
 
+## Post-Generation Checklist
+
+생성 후 다음을 검증:
+
+- [ ] 결과물의 장르/무드가 프롬프트 의도와 일치하는가
+- [ ] 악기 구성이 지정한 대로 반영되었는가
+- [ ] 보컬 스타일이 기대와 맞는가 (불일치 시 재생성)
+- [ ] 곡 구조([Verse]/[Chorus]/[Bridge])가 의도대로 구성되었는가
+- [ ] 템포/에너지 레벨이 영상 씬의 감정과 동기화되는가
+- [ ] 곡 길이가 영상 Duration과 매칭되는가
+- [ ] 영상 타이밍에 맞는 빌드업/드롭 포인트가 있는가
+- [ ] Style Prompt와 Lyrics가 혼재되지 않았는가
+
 ---
 
 ## Common Mistakes

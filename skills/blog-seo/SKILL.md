@@ -225,14 +225,27 @@ user-invocable: false
 
 ---
 
-## SEO Checklist
+## Pre-Writing SEO Checklist
+
+작성 전 SEO 전략 확인:
+
+- [ ] Primary keyword가 결정되었는가
+- [ ] Secondary keywords 3~5개가 선정되었는가
+- [ ] 검색 의도(정보형/비교형/구매형)를 파악했는가
+- [ ] Title Tag이 설계되었는가 (50~60자 영 / 25~30자 한, Primary keyword 앞배치)
+- [ ] H2 구조에 Secondary keyword가 분배되었는가
+- [ ] AEO Direct Answer 포맷을 적용할 질문이 선정되었는가
+
+## Post-Writing SEO Checklist
+
+작성 후 SEO 검증:
 
 - [ ] Title Tag이 50~60자(영) / 25~30자(한)이며 Primary keyword가 앞에 배치되었는가
 - [ ] Meta Description이 150~160자(영) / 80~100자(한)이며 CTA를 포함하는가
 - [ ] H1이 1개이며 Primary keyword를 포함하는가
 - [ ] H2에 Secondary keyword가 분배되었는가
 - [ ] Primary keyword가 첫 100단어(영) / 200자(한) 내에 등장하는가
-- [ ] Keyword density가 1~2% 범위인가
+- [ ] Keyword density가 1~2% 범위인가 (억지 삽입 없이 자연스러운가)
 - [ ] 내부 링크가 1,000단어(영) / 1,500자(한)당 3~5개 포함되었는가
 - [ ] 외부 링크가 권위 있는 출처를 참조하는가
 - [ ] 이미지에 Descriptive ALT 텍스트가 있는가

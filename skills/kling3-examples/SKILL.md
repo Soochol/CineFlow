@@ -302,6 +302,17 @@ Soft morning sunlight fills a minimalist studio kitchen with white marble counte
 
 ---
 
+## Usage Checklist
+
+예시를 참조할 때 다음을 확인:
+
+- [ ] 장면에 가장 가까운 카테고리(12종)를 찾았는가
+- [ ] EN 프롬프트의 구조(요소 배치 순서)를 참고하고 있는가
+- [ ] Negative 프롬프트를 장면 특성에 맞게 조정했는가 (예시를 그대로 복사 X)
+- [ ] Settings(Duration, 비율, 스타일)를 실제 프로젝트에 맞게 변경했는가
+- [ ] 예시를 복사하지 않고 패턴만 참조하여 프로젝트 고유 프롬프트를 작성했는가
+- [ ] 멀티샷 예시의 Duration 배분 비율을 참고하고 있는가
+
 ## Notes
 
 - 각 예시의 EN 프롬프트가 실제 Kling 3.0에 입력하는 텍스트이며, KO는 의미 참고용

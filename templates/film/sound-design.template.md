@@ -33,14 +33,14 @@
 
 ### SFX (효과음)
 
-| # | 효과음 | 타이밍 | Duration |
-|---|--------|--------|----------|
+| Shot # | 효과음 | 타이밍 | Duration |
+|--------|--------|--------|----------|
 | 1 | {sfx_desc} | {sfx_timing} | {sfx_duration}s |
 
 ### Voice (대사/내레이션)
 
-| # | 인물 | 대사 | 톤 | Duration |
-|---|------|------|----|----------|
+| Shot # | 인물 | 대사 | 톤 | Duration |
+|--------|------|------|----|----------|
 | 1 | {voice_character} | {voice_line} | {voice_tone} | {voice_duration}s |
 
 ---

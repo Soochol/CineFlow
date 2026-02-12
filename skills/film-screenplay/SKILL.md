@@ -1,5 +1,5 @@
 ---
-name: screenplay
+name: film-screenplay
 description: |
   스크린플레이 생성 스킬. 트리트먼트를 기반으로
   Scene별 스토리/연출 의도, Shot별 카메라/모션/대사/프롬프트를 자동 생성한다.
@@ -15,7 +15,7 @@ allowed-tools:
   - Grep
   - AskUserQuestion
 imports:
-  - ${PLUGIN_ROOT}/templates/screenplay.template.md
+  - ${PLUGIN_ROOT}/templates/film/screenplay.template.md
 next-skill: null
 ---
 
@@ -33,7 +33,7 @@ next-skill: null
 ## Prerequisites
 
 - `PRODUCTION/{project}/02-treatment.md` 존재 필수
-- 없으면 → "트리트먼트를 먼저 생성하세요. `/treatment {project}`" 안내
+- 없으면 → "트리트먼트를 먼저 생성하세요. `/film-treatment {project}`" 안내
 
 ## Process
 

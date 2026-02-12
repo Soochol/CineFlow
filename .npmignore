@@ -1,0 +1,7 @@
+docs/
+PRODUCTION/
+.claude/
+.git/
+.gitignore
+*.log
+Usersblessqwen-tts-env/

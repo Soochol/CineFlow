@@ -7,8 +7,7 @@
  * 사용자 입력에서 PDCA 키워드를 감지하여 자동 액션을 제안한다.
  */
 
-const fs = require('fs');
-const path = require('path');
+const { loadConfig, loadPdcaStatus } = require('./lib/config-loader');
 
 /**
  * PDCA intent detection patterns
@@ -52,34 +51,6 @@ const INTENT_PATTERNS = {
     /(스크린플레이|각본|씬|샷|극본|시나리오)/,
   ]
 };
-
-/**
- * Load config to check if intent detection is enabled
- */
-function loadConfig() {
-  const configPath = path.join(process.cwd(), 'affim-ai.config.json');
-  if (!fs.existsSync(configPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
-
-/**
- * Load PDCA status to provide context
- */
-function loadPdcaStatus() {
-  const statusPath = path.join(process.cwd(), 'docs', '.pdca-status.json');
-  if (!fs.existsSync(statusPath)) return null;
-
-  try {
-    return JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-  } catch (e) {
-    return null;
-  }
-}
 
 /**
  * Detect PDCA intent from user message

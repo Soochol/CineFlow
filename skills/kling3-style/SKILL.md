@@ -77,6 +77,22 @@ user-invocable: false
 | "Vintage feel" | "35mm film, warm grain, faded colors, sepia tones, organic natural color" |
 | "Dreamy look" | "Soft pastel palette, overexposed highlights, glowing bokeh, ethereal atmosphere" |
 
+## Pre-Generation Checklist
+
+- [ ] 스타일 프리셋이 장르/무드에 맞게 선택되었는가 (12종 중 1-2개)
+- [ ] 색감(Color & Mood)이 장면의 감정과 일치하는가
+- [ ] 조명 타입이 장소/시간대에 적합한가
+- [ ] 스타일 문구가 프롬프트 끝부분에 배치되었는가
+- [ ] 2개 이상 스타일 혼합이 아닌가 (과도한 혼합 확인)
+
+## Post-Generation Checklist
+
+- [ ] 전체 씬에서 스타일/색감/조명이 일관되는가 (Design Global Style 대조)
+- [ ] 스타일 표현이 구체적인가 ("Make it look cinematic" X → "Cinematic realism, 4K, shallow DOF" O)
+- [ ] 조명 조합이 자연스러운가 (모순 없음: Golden hour + 어두운 실내)
+- [ ] 색감 톤이 씬의 감정 변화에 맞게 조절되었는가
+- [ ] 네거티브 프롬프트에 스타일 방해 요소가 포함되었는가 (시리어스→bright colors 제외 등)
+
 ## Notes
 
 - 스타일 문구는 프롬프트 끝부분에 추가하는 것이 효과적

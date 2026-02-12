@@ -1,5 +1,5 @@
 ---
-name: treatment
+name: film-treatment
 description: |
   트리트먼트 생성 스킬. 로그라인을 기반으로
   세계관, 3막 구조, 인물을 자동 생성한다.
@@ -11,7 +11,7 @@ user-invocable: true
 agents:
   default: affim-ai:story-designer
 imports:
-  - ${PLUGIN_ROOT}/templates/treatment.template.md
+  - ${PLUGIN_ROOT}/templates/film/treatment.template.md
 next-skill: null
 ---
 
@@ -28,7 +28,7 @@ next-skill: null
 ## Prerequisites
 
 - `PRODUCTION/{project}/01-logline.md` 존재 필수
-- 없으면 → "로그라인을 먼저 생성하세요. `/logline {project}`" 안내
+- 없으면 → "로그라인을 먼저 생성하세요. `/film-logline {project}`" 안내
 
 ## 로그라인 분석 규칙
 
@@ -105,7 +105,7 @@ next-skill: null
 - 시놉시스가 200-300자 범위 내
 
 ### Character Profiles
-- `character` 스킬의 Quality Criteria 참조
+- `film-character` 스킬의 Quality Criteria 참조
 
 ---
 
@@ -139,7 +139,7 @@ next-skill: null
 ## Notes
 
 - 로그라인의 6요소(주인공, 결핍/욕구, 촉발 사건, 장애물, 핵심 갈등, 스테이크)가 모든 규칙의 판단 기준이 된다
-- 인물 상세 프로파일은 `character` 스킬의 규칙을 적용한다
+- 인물 상세 프로파일은 `film-character` 스킬의 규칙을 적용한다
 - 영상 프롬프트는 `kling3-prompt` 스킬의 규칙을 적용한다
 
 ## Next

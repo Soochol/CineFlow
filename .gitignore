@@ -1,1 +1,12 @@
+node_modules/
+PRODUCTION/
+docs/01-plan/
+docs/02-design/
+docs/03-analysis/
+docs/archive/
+docs/.pdca-status.json
+docs/.pdca-snapshots/
+docs/.film-snapshots/
+.claude/settings.local.json
 nul
+*.log
