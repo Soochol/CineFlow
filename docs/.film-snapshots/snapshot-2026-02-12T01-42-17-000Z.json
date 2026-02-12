@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-12T01:42:17.001Z",
+  "reason": "manual",
+  "status": {
+    "project": "affim-ai",
+    "filmType": "FeatureFilm",
+    "currentPhase": null,
+    "phaseHistory": [],
+    "scenes": {},
+    "characters": {},
+    "assets": {
+      "storyboardFrames": 0,
+      "generatedShots": 0,
+      "voiceClips": 0,
+      "musicTracks": 0
+    },
+    "session": {
+      "startedAt": "2026-02-11T11:22:52.045Z",
+      "onboardingCompleted": false,
+      "lastActivity": "2026-02-11T11:22:52.046Z"
+    }
+  },
+  "summary": {
+    "project": "affim-ai",
+    "filmType": "FeatureFilm",
+    "currentPhase": null,
+    "totalScenes": 0,
+    "completedScenes": 0,
+    "totalAssets": 0
+  }
+}

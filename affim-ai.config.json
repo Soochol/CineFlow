@@ -1,0 +1,128 @@
+{
+  "$schema": "./affim-ai.config.schema.json",
+  "version": "0.1.0",
+  "pdca": {
+    "designDocPaths": [
+      "docs/02-design/features/{content}.design.md"
+    ],
+    "planDocPaths": [
+      "docs/01-plan/features/{content}.plan.md"
+    ],
+    "analysisDocPaths": [
+      "docs/03-analysis/{content}.analysis.md"
+    ],
+    "outputPaths": [
+      "PRODUCTION/{content}/"
+    ],
+    "mergeOutputFilename": "story.md",
+    "statusFile": "docs/.pdca-status.json",
+    "matchRateThreshold": 90,
+    "autoIterate": true,
+    "maxIterations": 5
+  },
+  "agents": {
+    "taskBased": {
+      "section writing": "section-writer",
+      "gap analysis": "analyst",
+      "iterate": "improver",
+      "team": "leader",
+      "project lead": "leader",
+      "treatment generation": "story-designer"
+    },
+    "deprecated": {
+      "content-orchestrator": "오케스트레이션 로직이 PDCA 스킬 Do phase로 이전됨 (계층 평탄화)"
+    }
+  },
+  "templates": {
+    "directory": "templates",
+    "types": {
+      "plan": "plan.template.md",
+      "design": "design.template.md",
+      "analysis": "analysis.template.md",
+      "blog-design": "blog-design.template.md",
+      "character": "character.template.md"
+    }
+  },
+  "contentTypes": {
+    "film": {
+      "skills": ["kling3-prompt", "kling3-camera", "kling3-style", "kling3-examples", "suno-prompt", "suno-domain"],
+      "templates": ["film-design.template.md", "screenplay.template.md", "sound-design.template.md", "logline.template.md", "treatment.template.md", "character.template.md"],
+      "pipeline": ["logline", "treatment", "screenplay"],
+      "sectionOffset": 3
+    },
+    "blog": {
+      "skills": ["blog-writing", "blog-seo"],
+      "templates": ["plan.template.md", "design.template.md", "blog-design.template.md"],
+      "sectionOffset": 0
+    }
+  },
+  "hooks": {
+    "sessionStart": {
+      "enabled": true,
+      "timeout": 5000
+    },
+    "stop": {
+      "enabled": true,
+      "timeout": 5000
+    },
+    "userPromptSubmit": {
+      "enabled": true,
+      "timeout": 3000
+    },
+    "contextCompaction": {
+      "enabled": true,
+      "snapshotLimit": 10
+    },
+    "taskCompleted": {
+      "enabled": true,
+      "autoAdvance": true
+    },
+    "contentWritePre": {
+      "enabled": true,
+      "timeout": 3000
+    },
+    "contentWritePost": {
+      "enabled": true,
+      "timeout": 3000
+    },
+    "teammateIdle": {
+      "enabled": false
+    }
+  },
+  "automation": {
+    "intentDetection": true,
+    "ambiguityThreshold": 50,
+    "supportedLanguages": ["en", "ko", "ja", "zh", "es", "fr", "de", "it"]
+  },
+  "context": {
+    "defaultForkBehavior": "fork",
+    "importCacheTTL": 30000,
+    "hierarchyCacheTTL": 5000
+  },
+  "conventions": {
+    "files": {
+      "sections": "{NN}-section-{N}.md",
+      "plan": "{content}.plan.md",
+      "design": "{content}.design.md",
+      "analysis": "{content}.analysis.md"
+    },
+    "characters": {
+      "promptLabel": "@{name}",
+      "displayName": "{name}",
+      "rule": "promptLabel is used only inside AI generation prompts (Kling/Suno). displayName is used everywhere else."
+    },
+    "sectionNumbering": "1-based sequential",
+    "contentNaming": "kebab-case"
+  },
+  "team": {
+    "enabled": false,
+    "displayMode": "in-process",
+    "maxTeammates": 4,
+    "leaderAgent": "leader",
+    "orchestrationPatterns": {
+      "plan": "leader",
+      "design": "leader",
+      "do": "swarm"
+    }
+  }
+}

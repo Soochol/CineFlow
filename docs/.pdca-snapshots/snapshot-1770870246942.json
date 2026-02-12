@@ -1,0 +1,69 @@
+{
+  "timestamp": "2026-02-12T04:24:06.941Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-02-12T02:50:40.365Z",
+    "activeFeatures": [
+      "scripts"
+    ],
+    "primaryFeature": "scripts",
+    "features": {
+      "scripts": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-12T02:43:10.033Z",
+          "lastUpdated": "2026-02-12T02:50:40.365Z"
+        },
+        "lastFile": "c:\\Users\\bless\\code\\affim-ai\\hooks\\scripts\\user-prompt-handler.js"
+      }
+    },
+    "pipeline": {
+      "currentPhase": "archived",
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-02-12T02:33:17.137Z",
+      "onboardingCompleted": false,
+      "lastActivity": "2026-02-12T02:50:40.365Z"
+    },
+    "history": [
+      {
+        "timestamp": "2026-02-12T02:43:10.033Z",
+        "feature": "scripts",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-12T02:43:17.583Z",
+        "feature": "scripts",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-12T02:43:28.807Z",
+        "feature": "scripts",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-12T02:43:37.238Z",
+        "feature": "scripts",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-12T02:50:40.365Z",
+        "feature": "scripts",
+        "phase": "do",
+        "action": "updated"
+      }
+    ]
+  }
+}
