@@ -19,6 +19,12 @@
 ## Tone & Manner
 {toneAndManner}
 
+## Target Runtime
+{targetRuntime}
+
+## Visual Style
+{visualStyle}
+
 ## Section Outline
 | # | Title | Purpose |
 |---|-------|---------|

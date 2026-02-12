@@ -78,7 +78,7 @@ tools:
 Character Document가 전달된 경우:
 - 일반 텍스트에서 이름으로 표기
 - AI 프롬프트 블록 안에서만 `@이름` 형식으로 표기 (Prompt Label)
-- 인물 등장 샷: Character Document의 "English Visual Reference Prompt" 기반 프롬프트 작성
+- 인물 등장 샷: Character Document의 "English Visual Reference Prompts"에서 해당 샷의 Shot Type과 앵글에 맞는 프롬프트를 선택하여 사용
 - 외형/의상: Character Document의 Visual Design 정확히 반영
 
 ## Output

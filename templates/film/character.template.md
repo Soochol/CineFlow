@@ -39,12 +39,38 @@
 - **Accessories**: {accessories}
 - **Props**: {props}
 
-### English Visual Reference Prompt
+### English Visual Reference Prompts
 
-> Kling AI 생성 시 Subject 파트에 복사하여 사용
+> Kling AI 이미지 생성용. 해당 앵글의 프롬프트를 Subject 파트에 복사하여 사용.
 
+**Close-up** — Eye-level, front-facing, {aspect_ratio}, background: {background}
 ```
-{kling_visual_prompt}
+{kling_cu_front}
+```
+
+**Medium Shot** — Eye-level, front-facing, {aspect_ratio}, background: {background}
+```
+{kling_ms_front}
+```
+
+**Medium Shot** — Three-quarter view, {aspect_ratio}, background: {background}
+```
+{kling_ms_3quarter}
+```
+
+**Medium Shot** — From behind, {aspect_ratio}, background: {background}
+```
+{kling_ms_back}
+```
+
+**Wide Shot** — Eye-level, front-facing, {aspect_ratio}, background: {background}
+```
+{kling_ws_front}
+```
+
+**Wide Shot** — From behind, {aspect_ratio}, background: {background}
+```
+{kling_ws_back}
 ```
 
 **Consistency Tags:** {age_tag}, {build_tag}, {hair_tag}, {outfit_tag}

@@ -60,11 +60,11 @@ imports:
 - 적대자 → 위협/권위 색상 (어두운 색, 강한 대비)
 - 조력자 → 신뢰/안정 색상 (블루, 그린 계열)
 
-### Step 3: English Visual Reference Prompt 생성
+### Step 3: English Visual Reference Prompts 생성 (6 앵글)
 
 **Input**: Step 2의 Visual Design
 
-**Decision**: `kling3-prompt`의 Subject 기술을 적용하여 Kling AI 생성용 영문 프롬프트를 작성한다.
+**Decision**: `kling3-prompt`의 Subject 기술을 적용하여 Kling AI 이미지 생성용 (9:16 세로, 화이트 배경) 영문 프롬프트를 **6개 앵글별**로 작성한다.
 
 #### Subject 구성 공식 (from kling3-prompt)
 
@@ -83,6 +83,25 @@ imports:
 4. **특징적 행동**: heels clicking, hand trembling
 5. **감정 상태**: melancholic expression, sharp focused eyes
 6. **Micro-motions**: breathing, blinking, hair catching wind, clothing ripple
+
+#### 6 앵글별 프롬프트 가이드
+
+각 캐릭터마다 다음 6개 앵글의 프롬프트를 생성한다. 앵글마다 보이는 범위가 다르므로, 해당 프레임에서 드러나는 요소에 집중한다.
+
+| 앵글 | 설명 |
+|------|------|
+| **Close-up** (Eye-level, front-facing) | 얼굴과 표정이 주인공이 되는 프레임. 눈, 피부 질감, 감정 표현에 집중하고 캐릭터를 식별할 수 있는 얼굴부 특징을 포함한다. |
+| **Medium Shot** (Eye-level, front-facing) | 상반신 정면으로 의상과 체형의 인상을 잡는 프레임. 포즈와 자세에서 성격이 드러나도록 한다. |
+| **Medium Shot** (Three-quarter view) | 45도 각도에서 얼굴과 상체의 입체감을 보여주는 프레임. 실루엣과 의상의 측면 디테일이 드러난다. |
+| **Medium Shot** (From behind) | 뒷모습 상반신으로 뒷머리, 등, 의상 후면의 특징을 보여주는 프레임. |
+| **Wide Shot** (Eye-level, front-facing) | 정면 전신으로 체형 비율, 전체 의상, 자세를 한눈에 보여주는 프레임. 캐릭터와 공간의 관계가 드러난다. |
+| **Wide Shot** (From behind) | 후면 전신으로 뒷모습 실루엣과 의상 전체를 보여주는 프레임. 배경과의 관계를 포함한다. |
+
+**공통 규칙:**
+- 모든 앵글에 6 Essential Elements 중 Subject + Lighting + Texture 반영
+- 레퍼런스 이미지 용도이므로 중립적 표정/자세 기본 (극단적 액션 지양)
+- 프롬프트 시작에 앵글/프레이밍 명시 (예: "Close-up, eye-level, front-facing, ...")
+- 배경은 항상 `clean white background` 명시 — 캐릭터 레퍼런스 시트 용도
 
 #### 캐릭터 라벨 이중 표기
 
@@ -209,12 +228,38 @@ distorted faces, warped limbs, unrealistic proportions, deformed hands, extra fi
 - **Accessories**: Magnetic lab badge on chest
 - **Props**: Transparent data tablet
 
-### English Visual Reference Prompt
+### English Visual Reference Prompts
 
-> Kling AI 생성 시 Subject 파트에 복사하여 사용
+> Kling AI 이미지 생성용. 해당 앵글의 프롬프트를 Subject 파트에 복사하여 사용.
 
+**Close-up** — Eye-level, front-facing, 9:16, background: white
 ```
-Slender humanoid robot, 170cm, smooth white synthetic body with panel seams, minimalist face with cyan glowing optical sensor eyes, horizontal cyan LED strip across temples, grey fitted worksuit with blue accent stripes, magnetic badge on chest, transparent data tablet in hand, matte plastic texture with subtle reflections
+Close-up, eye-level, front-facing, minimalist humanoid face with gentle contours, large cyan glowing optical sensor eyes with dynamic iris patterns, horizontal cyan LED strip across temples, smooth white synthetic skin with subtle panel seams, neutral expression, soft studio lighting with cyan catchlights in eyes, clean white background
+```
+
+**Medium Shot** — Eye-level, front-facing, 9:16, background: white
+```
+Medium shot, eye-level, front-facing, slender humanoid robot 170cm, grey fitted worksuit with blue accent stripes, magnetic badge on chest, transparent data tablet in hand, smooth white synthetic body, cyan LED temples, standing with slight head tilt, soft diffused lighting, clean white background
+```
+
+**Medium Shot** — Three-quarter view, 9:16, background: white
+```
+Medium shot, three-quarter view, slender humanoid robot, grey worksuit with blue accent stripes visible along side seam, smooth white synthetic arm panels, cyan LED strip across temples catching light, magnetic badge on chest, matte plastic texture with subtle reflections, clean white background
+```
+
+**Medium Shot** — From behind, 9:16, background: white
+```
+Medium shot, from behind, slender humanoid robot, smooth white synthetic back panels with fine seam lines, grey worksuit with blue accent stripe running down spine, smooth dome head with horizontal cyan LED strip at temples, soft rim lighting outlining silhouette, clean white background
+```
+
+**Wide Shot** — Eye-level, front-facing, 9:16, background: white
+```
+Wide shot, eye-level, front-facing, slender humanoid robot 170cm standing in neutral pose, grey fitted worksuit with blue accent stripes, magnetic badge on chest, transparent data tablet at side, smooth white synthetic body, full figure, soft even lighting, clean white background
+```
+
+**Wide Shot** — From behind, 9:16, background: white
+```
+Wide shot, from behind, slender humanoid robot 170cm, grey worksuit with blue accent stripes, smooth white synthetic body panels, cyan LED temples faintly glowing, standing upright looking forward, full figure silhouette, soft backlight rim, clean white background
 ```
 
 **Consistency Tags:** humanoid-robot, slender-170cm-white-synthetic, smooth-dome-cyan-LED, grey-worksuit-blue-accents
@@ -249,12 +294,13 @@ Slender humanoid robot, 170cm, smooth white synthetic body with panel seams, min
 ## Quality Criteria
 
 - Visual Design이 세계관/장르와 일관됨
-- English Visual Reference Prompt가 kling3-prompt Subject 형식 준수 (주체+외형+액션, 4-6개 시각 요소)
+- English Visual Reference Prompts 6개 앵글 모두 생성, 앵글별 프레이밍에 맞는 디테일 반영, kling3-prompt Subject 형식 준수
 - Consistency Tags가 매 샷 참조에 적합함
 - Personality가 3막 역할에 맞음
 - Relationships가 3막 갈등 기반 역학 포함
 
 ## Notes
 
-- Visual Reference Prompt는 `kling3-prompt` 스킬의 6 Essential Elements Subject 기술 기반
-- 첫 등장 샷에서는 Visual Reference Prompt 전체 사용, 이후 Consistency Tags로 간결하게 참조
+- Visual Reference Prompts는 `kling3-prompt` 스킬의 6 Essential Elements Subject 기술 기반, 9:16 세로 비율, 화이트 배경
+- 6개 앵글 (Close-up, Medium Shot front/three-quarter/back, Wide Shot front/back) 전부 생성
+- section-writer는 샷의 Shot Type과 앵글에 맞는 프롬프트를 선택하여 사용, 이후 Consistency Tags로 간결하게 참조

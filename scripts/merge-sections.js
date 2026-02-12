@@ -115,7 +115,7 @@ async function main() {
   // Load config and determine content type
   const config = loadConfig();
   const pdcaStatus = loadPdcaStatus();
-  const contentType = pdcaStatus?.contentType;
+  const contentType = pdcaStatus?.features?.[contentName]?.contentType || pdcaStatus?.contentType;
 
   const sectionRegex = getSectionFileRegex(config, contentType);
   const mergeStrategy = getMergeStrategy(config, contentType);

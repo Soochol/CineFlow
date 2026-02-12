@@ -75,6 +75,8 @@ pdca-phase: null
    - 핵심 메시지 (Core Message)
    - 톤앤매너 (Tone & Voice)
    - 콘텐츠 타입 (Content Type: film / blog / etc.)
+   - 영상 시간 (Target Runtime: film / narration-video 타입인 경우 — 예: 60초, 120초, 180초)
+   - 영상 스타일 (Visual Style: film / narration-video 타입인 경우 — kling3-style 레퍼런스 기반으로 스타일 프리셋, 색감, 조명 선호)
 4. `templates/shared/plan.template.md` 기반으로 기획서 생성
 5. `docs/.pdca-status.json` 갱신: phase = "plan", status = "done"
 
@@ -83,7 +85,7 @@ pdca-phase: null
 ### design (Design Phase) — Config-driven designPhaseSteps
 
 1. Plan 문서 존재 확인 (필수 — 없으면 Plan 먼저 실행 제안)
-2. Plan 문서 읽기 → 핵심 메시지, 독자, 톤 추출
+2. Plan 문서 읽기 → 핵심 메시지, 독자, 톤, 영상 시간(Target Runtime), 영상 스타일(Visual Style) 추출
 3. `affim-ai.config.json`에서 `contentTypes[type].designPhaseSteps` 배열 로드
 4. **각 step을 순서대로 실행:**
 

@@ -110,7 +110,7 @@ imports:
 
 **Action**: `film-character` 스킬과 `kling3-prompt` 스킬의 규칙을 적용하여 상세 캐릭터 프로파일을 생성한다.
 - Visual Design 생성 규칙 (세계관/장르별 외형/의상/색상 심리)
-- English Visual Reference Prompt 생성 규칙 (kling3-prompt Subject 기술, 4-6개 시각 요소)
+- English Visual Reference Prompts 생성 규칙 (6 앵글: Close-up, MS front/three-quarter/back, WS front/back, 9:16 세로, 화이트 배경)
 - Consistency Tags (매 샷 참조용: Age/Build/Hair/Outfit tags)
 - 캐릭터 라벨 이중 표기: `@이름` (Kling 프롬프트 전용) + `[Character: Visual Identifier]` (Kling 라벨)
 - Personality/Arc/Voice/Relationships 작성 기준
@@ -123,7 +123,7 @@ imports:
 **Self-Check**: `film-character` 스킬의 **Quality Criteria** 기준으로 검증한다. 미충족 시 수정.
 
 1. **Visual Design 일관성**: Visual Design이 세계관/장르와 일관됨
-2. **Kling Subject 형식**: English Visual Reference Prompt가 kling3-prompt Subject 형식 준수 (주체+외형+액션, 4-6개 시각 요소)
+2. **Kling Subject 형식**: English Visual Reference Prompts 6개 앵글 모두 존재, 앵글별 프레이밍에 맞는 디테일 반영
 3. **Consistency Tags**: 매 샷 참조에 적합한 짧은 키워드 세트 (Age/Build/Hair/Outfit)
 4. **Personality 정합성**: Personality가 3막 역할에 맞음
 5. **Relationships 역학**: Relationships가 3막 갈등 기반 역학 포함
